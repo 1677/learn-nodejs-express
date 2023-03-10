@@ -1,14 +1,10 @@
 import e, { Express, Request, Response } from "express";
+import router from "./router";
 
 const app: Express = e();
 
-app.get('/', (req: Request, res: Response) => {
-    console.log(req.query);
-    res.send({
-        status: 0,
-        message: '请求成功'
-    });
-});
+// 使用router中间件
+app.use(router);
 
 app.listen(8088, () => {
     console.log('server start');
