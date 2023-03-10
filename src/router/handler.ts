@@ -9,17 +9,31 @@ export const profileHandler = (req: Request, res: Response) => {
 }
 
 export const loginHandler = (req: Request, res: Response) => {
-    console.log(req.query);
+    console.log(req.body);
+    const data = req.body;
+    if (!data['username'] || !data['password']){
+        res.sendError('提交内容不合法');
+        return;
+    }
     res.send({
         status: 0,
-        message: '登录成功'
+        message: '登录成功',
+        data: data['username']
     });
 }
 
 export const registerHandler = (req: Request, res: Response) => {
-    console.log(req.query);
+
+    console.log(req.body);
+    const data = req.body;
+    if (!data['username'] || !data['password']){
+        res.sendError('提交内容不合法');
+        return;
+    }
+
     res.send({
         status: 0,
-        message: '注册成功'
+        message: '注册成功',
+        data: data['username']
     });
 }
