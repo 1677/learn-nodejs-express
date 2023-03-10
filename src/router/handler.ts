@@ -1,8 +1,9 @@
 import { Response } from "express"
 import { Request } from "express-jwt";
 import jwt from "jsonwebtoken";
-import { ageKey, emailKey, jwtSignSecret, nicknameKey, passwordKey, usernameKey } from "../constants";
+import { ageKey, emailKey, jwtSignSecret, nicknameKey, passwordKey, saltLength, usernameKey } from "../constants";
 import { insertUser, queryPassword, queryPureUser } from "../sql";
+import bcrypt from "bcrypt";
 
 export const profileHandler = async (req: Request, res: Response) => {
     console.log(req.query);
@@ -26,8 +27,9 @@ export const loginHandler = async (req: Request, res: Response) => {
     const data = req.body;
 
     // 验证用户名与密码
-    const passowrdString = await queryPassword(data[usernameKey]);
-    if (!passowrdString || passowrdString !== data[passwordKey]) {
+    const passwordString = await queryPassword(data[usernameKey]);
+    const isSame = bcrypt.compareSync(data[passwordKey], passwordString);
+    if (!isSame) {
         res.sendError('登录失败');
         return;
     }
@@ -52,9 +54,11 @@ export const registerHandler = async (req: Request, res: Response) => {
         res.sendError('用户已存在');
         return;
     }
+    // 密码hash处理
+    const hashPassword = bcrypt.hashSync(data[passwordKey], saltLength);
     const user: User = {
         username: data[usernameKey],
-        password: data[passwordKey],
+        password: hashPassword,
         age: data[ageKey],
         nickname: data[nicknameKey],
         email: data[emailKey]

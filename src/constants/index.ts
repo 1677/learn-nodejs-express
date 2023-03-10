@@ -7,4 +7,7 @@ export const emailKey = 'email';
 export const ageKey = 'age';
 
 // jwt盐的长度
+export const saltLength = 10;
+
+// jwt密钥
 export const jwtSignSecret = "djfasdjf8384@3432f";
