@@ -1,0 +1,15 @@
+{
+  "name": "learn-nodejs-express",
+  "version": "1.0.0",
+  "main": "./outDir/index.js",
+  "repository": "git@github.com:1677/learn-nodejs-express.git",
+  "author": "wosicuanqi <1677746430@qq.com>",
+  "license": "MIT",
+  "dependencies": {
+    "@types/express": "^4.17.17",
+    "express": "^4.18.2"
+  },
+  "scripts": {
+    "start" : "ts-node ./src/index.ts"
+  }
+}
